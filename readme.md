@@ -12,6 +12,7 @@ $('#my-subscription-form').on('submit', function (e) {
 
   $.ajax({
     // Without a `url`, this just POSTS back to current URL
+    method: 'POST',
     // Provide an `action` param in the body:
     data: {
       action: 'mailchimp/subscription/addSubscriber',
