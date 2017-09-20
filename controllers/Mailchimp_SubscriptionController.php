@@ -15,7 +15,7 @@ class Mailchimp_SubscriptionController extends BaseController
 
     if (!filter_var($params['email'], FILTER_VALIDATE_EMAIL)) {
       $this->returnJson([
-        'error' => 'Please provide a valid email address.'
+        'error' => craft()->config->get('messageInvalidEmail', 'mailchimp')
       ]);
     }
 
@@ -25,10 +25,10 @@ class Mailchimp_SubscriptionController extends BaseController
     if ($response) {
       $this->returnJson([
         'success' => true,
-        'message' => 'Thanks! Please check your email to confirm your membership.'
+        'message' => craft()->config->get('messageSuccess', 'mailchimp')
       ]);
     } else {
-      $this->returnErrorJson('Sorry, something went wrong. Please check that you are not already subscribed, and try again.');
+      $this->returnErrorJson(craft()->config->get('messageFailure', 'mailchimp'));
     }
   }
 }
