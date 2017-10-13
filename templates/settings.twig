@@ -1,0 +1,15 @@
+{% extends "_layouts/cp" %}
+
+{% set title = 'Mailchimp Integration Settings' %}
+
+{% set content %}
+  <h2>MailChimp API Cache</h2>
+
+  <p>If you've made changes in Mailchimp and need them to show up immediately, purge the cache.</p>
+
+  <form method="POST">
+    <input type="hidden" name="action" value="mailchimp/settings/clearCache">
+    <input type="submit" value="Clear Cache" class="btn submit">
+    {{ getCsrfInput() }}
+  </form>
+{% endset %}

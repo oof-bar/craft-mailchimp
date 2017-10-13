@@ -1,10 +1,10 @@
 <? namespace Craft;
 
-class Mailchimp_SubscriptionController extends BaseController
+class Mailchimp_ListController extends BaseController
 {
-  protected $allowAnonymous = ['actionAddSubscriber'];
+  protected $allowAnonymous = ['actionAddMember'];
 
-  public function actionAddSubscriber()
+  public function actionAddMember()
   {
     $this->requirePostRequest();
 
@@ -19,9 +19,9 @@ class Mailchimp_SubscriptionController extends BaseController
       ]);
     }
 
-    $response = craft()->mailchimp_subscription->addSubscriber($params['email'], $params['listId']);
+    $response = craft()->mailchimp_list->addMember($params['email'], $params['listId']);
 
-    // SubscriptionService::addSubscriber will return false if anything went wrong.
+    // ListService::addMember will return false if anything went wrong.
     if ($response) {
       $this->returnJson([
         'success' => true,

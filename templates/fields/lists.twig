@@ -1,0 +1,7 @@
+<div class="select">
+  <select class="select" name="{{ name }}">
+    {% for list in lists %}
+      <option value="{{ list.id }}" {{- list.id == value ? ' selected' : null }}>{{ list.name }}</option>
+    {% endfor %}
+  </select>
+</div>

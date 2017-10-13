@@ -4,12 +4,12 @@ class MailchimpPlugin extends BasePlugin
 {
   public function getName()
   {
-    return Craft::t('Mailchimp Subscriptions');
+    return Craft::t('MailChimp');
   }
 
   public function getVersion()
   {
-    return '0.0.1';
+    return '0.0.2';
   }
 
   public function getDeveloper()
@@ -25,5 +25,10 @@ class MailchimpPlugin extends BasePlugin
   public function hasCpSection()
   {
     return false;
+  }
+
+  public function getSettingsUrl()
+  {
+    return 'mailchimp/settings';
   }
 }
