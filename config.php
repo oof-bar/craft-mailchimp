@@ -1,5 +1,5 @@
 <? return [
-  'apiBaseUrl' => null,
+  'dc' => null,
   'apiKey' => null,
   'defaultListId' => null,
   'messageSuccess' => 'Thanks! Please check your email to confirm your membership.',

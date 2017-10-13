@@ -51,9 +51,7 @@ class Mailchimp_RequestService extends BaseApplicationComponent
   {
     try
     {
-      $url = craft()->config->get('apiBaseUrl', 'mailchimp') . $route;
-
-      $request = $this->getClient()->$method($url);
+      $request = $this->getClient()->$method($this->getUrl($route));
 
       $request->setAuth('mcapi', craft()->config->get('apiKey', 'mailchimp'));
       $request->setBody(json_encode($data), 'application/json');
@@ -77,9 +75,7 @@ class Mailchimp_RequestService extends BaseApplicationComponent
   {
     try
     {
-      $url = craft()->config->get('apiBaseUrl', 'mailchimp') . $route;
-
-      $request = $this->getClient()->$method($url);
+      $request = $this->getClient()->$method($this->getUrl($route));
 
       $request->setAuth('mcapi', craft()->config->get('apiKey', 'mailchimp'));
       $query = $request->getQuery();
@@ -94,5 +90,25 @@ class Mailchimp_RequestService extends BaseApplicationComponent
     {
       return false;
     }
+  }
+
+  /**
+   * Get base URL for all API calls
+   *
+   * @return String $baseUrl
+   */
+  public function getBaseUrl()
+  {
+    return 'https://' . craft()->config->get('dc', 'mailchimp') . '.api.mailchimp.com/3.0/';
+  }
+
+  /**
+   * Get fully-qualified URL for a request
+   *
+   * @return String $baseUrl
+   */
+  public function getUrl($path)
+  {
+    return $this->getBaseUrl() . $path;
   }
 }

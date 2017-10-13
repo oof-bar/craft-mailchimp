@@ -15,7 +15,7 @@ $('#my-subscription-form').on('submit', function (e) {
     method: 'POST',
     // Provide an `action` param in the body:
     data: {
-      action: 'mailchimp/subscription/addSubscriber',
+      action: 'mailchimp/list/addMember',
       email: $('#email').value(),
       listId: $('#listId').value() // This input should probably be of type `hidden`.
     },
@@ -50,17 +50,38 @@ The service defaults to a `defaultListId` param in your config file—just creat
 ```
 <? return [
   'defaultListId' => 'abcd1234',
-  'apiKey' => 'us10-yourApiKey'
+  'apiKey' => 'us1-yourApiKey'
 ];
 ```
 
 You can override the `defaultListId` with any call to the service:
 
 ```php
-craft()->mailchimp_subscription->addSubscriber($order->email, 'abcd1234');
+craft()->mailchimp_list->addMember($order->email, 'abcd1234');
 ```
 
 A third argument allows you to customize any additional params sent to the API, including `status_if_new`, in case you've decided to bypass double opt-in (strongly discouraged, but appropriate in some limited circumstances).
+
+There are a few more configuration options that you should set:
+
+```php
+<? return [
+  # The datacenter that your account is tied to:
+  'dc' => 'us1',
+
+  # Your API secret:
+  'apiKey' => 'Your API Key',
+
+  # The default list ID for new members:
+  'defaultListId' => 'abcd1234',
+
+  # Various user feedback messages:
+  'messageSuccess' => 'Thanks! Please check your email to confirm your membership.',
+  'messageFailure' => 'Sorry, something went wrong. Please check that you are not already subscribed, and try again.',
+  'messageInvalidEmail' => 'Please provide a valid email address.'
+];
+```
+
 
 ## Installation
 
