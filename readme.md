@@ -40,7 +40,7 @@ craft()->on('commerce_orders.onOrderComplete', function ($event) {
   // Did they request to be added?
   if ($order->myNewsletterSubscribeField) {
     // Ok, add 'em!
-    craft()->mailchimp_subscription->addSubscriber($order->email);
+    craft()->mailchimp_list->addMember($order->email);
   }
 });
 ```
@@ -60,7 +60,13 @@ You can override the `defaultListId` with any call to the service:
 craft()->mailchimp_list->addMember($order->email, 'abcd1234');
 ```
 
-A third argument allows you to customize any additional params sent to the API, including `status_if_new`, in case you've decided to bypass double opt-in (strongly discouraged, but appropriate in some limited circumstances).
+A third argument allows you to customize any additional params sent to the API, including `status_if_new`, in case you've decided to bypass double opt-in (strongly discouraged, but appropriate in some limited circumstances):
+
+```php
+craft()->mailchimp_list->addMember($order->email, 'abcd1234', [
+  'statis_if_new' => 'subscribed'
+]);
+```
 
 There are a few more configuration options that you should set:
 
