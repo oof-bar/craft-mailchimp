@@ -1,0 +1,20 @@
+{% if categories | length %}
+  <div class="checkbox-groups">
+    {% for category in categories %}
+      <div class="mailchimp-field__interest-group">
+        <h4>{{ category.title }}</h4>
+        {% for interest in interests if interest.category_id == category.id %}
+          <div class="mailchimp-field__interest">
+            <label class="checkbox">
+              <input name="{{ name }}[]" type="checkbox" value="{{ interest.id }}" {{- interest.id in values ? ' checked' : null }} class="mailchimp-field__interest-checkbox">
+              <span title="{{ interest.id }}">{{ interest.name }}</span>
+            </label>
+            <span class="info">Interest ID <code>{{ interest.id }}</code></span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="warning">Interests for list <code>{{ settings.listId }}</code> could not be retrieved. Please double-check this field’s settings.</p>
+{% endif %}

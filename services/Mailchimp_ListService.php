@@ -3,7 +3,7 @@
 class Mailchimp_ListService extends BaseApplicationComponent
 {
   /**
-   * Add a subscriber to the provided list, with additional metadata:
+   * Add a subscriber to the provided list, with additional metadata.
    *
    * @return Array $subscriber
    */
@@ -27,13 +27,62 @@ class Mailchimp_ListService extends BaseApplicationComponent
     return craft()->mailchimp_request->requestPut($path, $body);
   }
 
+  /**
+   * Get all lists. Requires two queries, one to get `total_items`, and a second to fetch with a `count` that guarantees all lists are included.
+   *
+   * @return Array $lists
+   */
   public function getLists()
   {
-    $lists = craft()->mailchimp_request->requestGet('lists', []);
+    $prefetch = craft()->mailchimp_request->requestGet('lists', [
+      'fields' => 'total_items'
+    ], true);
 
-    if (isset($lists['lists']))
+    $all = craft()->mailchimp_request->requestGet('lists', [
+      'count' => $prefetch['total_items']
+    ], true);
+
+    if (isset($all['lists']))
     {
-      return $lists['lists'];
+      return $all['lists'];
+    }
+    else
+    {
+      return [];
+    }
+  }
+
+  /**
+   * Get Interest Categories for a single list.
+   *
+   * @return Array $lists
+   */
+  public function getListInterestCategories($listId)
+  {
+    $categories = craft()->mailchimp_request->requestGet("lists/$listId/interest-categories", [], true);
+
+    if (isset($categories['categories']))
+    {
+      return $categories['categories'];
+    }
+    else
+    {
+      return [];
+    }
+  }
+
+  /**
+   * Get Interests for an Interest Category within a single list.
+   *
+   * @return Array $lists
+   */
+  public function getListInterestsByInterestCategory($listId, $interestCategoryId)
+  {
+    $category = craft()->mailchimp_request->requestGet("lists/$listId/interest-categories/$interestCategoryId/interests", [], true);
+
+    if (isset($category['interests']))
+    {
+      return $category['interests'];
     }
     else
     {

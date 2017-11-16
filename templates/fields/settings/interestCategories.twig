@@ -1,0 +1,15 @@
+<div class="field">
+  <div class="heading">
+    <label>Source List</label>
+    <div class="instructions">
+      <p>Select the list from which to display groups, in the form.</p>
+    </div>
+  </div>
+</div>
+<div class="select">
+  <select class="select" name="listId">
+    {% for list in lists %}
+      <option value="{{ list.id }}" {{- list.id == settings.listId ? ' selected' : null }}>{{ list.name }}</option>
+    {% endfor %}
+  </select>
+</div>

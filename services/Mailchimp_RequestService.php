@@ -75,16 +75,32 @@ class Mailchimp_RequestService extends BaseApplicationComponent
   {
     try
     {
-      $request = $this->getClient()->$method($this->getUrl($route));
+      $cacheCriteria = compact('method', 'route', 'data');
+      $cacheKey = craft()->mailchimp_cache->getCacheKey($cacheCriteria);
 
-      $request->setAuth('mcapi', craft()->config->get('apiKey', 'mailchimp'));
-      $query = $request->getQuery();
+      if ($cache && $cachedValue = craft()->mailchimp_cache->getCachedValue($cacheCriteria))
+      {
+        return $cachedValue;
+      }
+      else
+      {
+        $request = $this->getClient()->$method($this->getUrl($route));
 
-      foreach ($data as $key => $val) $query->set($key, $val);
+        $request->setAuth('mcapi', craft()->config->get('apiKey', 'mailchimp'));
+        $query = $request->getQuery();
 
-      $response = $request->send();
+        foreach ($data as $key => $val) $query->set($key, $val);
 
-      return $response->json();
+        $response = $request->send();
+        $data = $response->json();
+
+        if ($cache)
+        {
+          craft()->mailchimp_cache->addCachedValue($cacheCriteria, $data);
+        }
+
+        return $data;
+      }
     }
     catch (\Exception $e)
     {
