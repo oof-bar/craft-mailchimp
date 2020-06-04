@@ -1,4 +1,4 @@
-<? namespace Craft;
+<?php namespace Craft;
 
 class Mailchimp_ListService extends BaseApplicationComponent
 {

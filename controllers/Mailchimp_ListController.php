@@ -1,4 +1,4 @@
-<? namespace Craft;
+<?php namespace Craft;
 
 class Mailchimp_ListController extends BaseController
 {

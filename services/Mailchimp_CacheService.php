@@ -1,4 +1,4 @@
-<? namespace Craft;
+<?php namespace Craft;
 
 /**
  * Cacheing layer for Mailchimp interactions.

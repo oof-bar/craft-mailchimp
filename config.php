@@ -1,4 +1,4 @@
-<? return [
+<?php return [
   'dc' => null,
   'apiKey' => null,
   'defaultListId' => null,

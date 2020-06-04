@@ -48,7 +48,7 @@ craft()->on('commerce_orders.onOrderComplete', function ($event) {
 The service defaults to a `defaultListId` param in your config file—just create `craft/config/mailchimp.php`:
 
 ```
-<? return [
+<?php return [
   'defaultListId' => 'abcd1234',
   'apiKey' => 'us1-yourApiKey'
 ];
@@ -71,7 +71,7 @@ craft()->mailchimp_list->addMember($order->email, 'abcd1234', [
 There are a few more configuration options that you should set:
 
 ```php
-<? return [
+<?php return [
   # The datacenter that your account is tied to:
   'dc' => 'us1',
 
